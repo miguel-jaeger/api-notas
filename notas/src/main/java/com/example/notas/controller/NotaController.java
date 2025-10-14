@@ -52,8 +52,7 @@ public class NotaController {
 
     // Archivar nota
     @PatchMapping("/{id}/archivar")
-    public Nota archivar(@PathVariable Long id, @RequestBody Map<String, Object> datos) {
-        Boolean archivada = (Boolean) datos.get("archivada");
-        return service.archivar(id, archivada != null && archivada);
+    public Nota archivar(@PathVariable Long id, @RequestBody Nota nota) {
+        return service.archivar(id, nota.isArchivada());
     }
 }
