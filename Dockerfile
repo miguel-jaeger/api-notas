@@ -1,8 +1,15 @@
 FROM maven:3.9.6-eclipse-temurin-21 AS build
 WORKDIR /app/notas
 # copiar sólo el subproyecto para que mvn encuentre el pom
+COPY target/app.jar app.jar
+
+# Crea la carpeta data antes de ejecutar
+RUN mkdir -p data
+
 COPY notas ./ 
 RUN mvn -B -DskipTests=true clean package
+
+CMD ["java", "-jar", "app.jar"]
 
 FROM eclipse-temurin:21-jre
 WORKDIR /app/notas
