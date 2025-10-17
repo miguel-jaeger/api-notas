@@ -9,4 +9,4 @@ WORKDIR /app/notas
 RUN mkdir -p /app/notas/data
 COPY --from=build /app/notas/target/*.jar app.jar
 EXPOSE 8080
-CMD ["sh","-c","mkdir -p /app/SUBDIR/data && java -Dserver.port=${PORT:-8080} -jar /app/SUBDIR/app.jar"]
+CMD ["sh","-c","mkdir -p /app/notas/data && java -Dserver.port=${PORT:-8080} -jar /app/notas/app.jar"]
