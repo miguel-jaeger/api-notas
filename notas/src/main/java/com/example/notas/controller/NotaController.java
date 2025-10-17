@@ -7,10 +7,13 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.util.List;
-import java.util.Map;
+
+
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/api/notas")
+@Tag(name = "Notas", description = "API para gestión de notas")
 public class NotaController {
     private final NotaService service;
 
@@ -20,6 +23,11 @@ public class NotaController {
 
     // Listar notas (ok)
     @GetMapping
+    /*@Operation(summary = "Listar todas las notas", description = "Retorna una lista de todas las notas")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Notas encontradas"),
+        @ApiResponse(responseCode = "404", description = "No se encontraron notas")
+    })*/
     public List<Nota> todas() {
         return service.listarTodas();
     }
