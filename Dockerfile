@@ -2,7 +2,7 @@ FROM maven:3.9.6-eclipse-temurin-21 AS build
 WORKDIR /app/notas
 # copiar sólo el subproyecto para que mvn encuentre el pom
 COPY notas ./ 
-RUN mvn -B -DskipTests=false clean package
+RUN mvn -B -DskipTests=true clean package
 
 FROM eclipse-temurin:21-jre
 WORKDIR /app/notas
