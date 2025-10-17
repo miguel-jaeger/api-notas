@@ -1,19 +1,13 @@
+# Etapa de build
 FROM maven:3.9.6-eclipse-temurin-21 AS build
 WORKDIR /app/notas
-# copiar sólo el subproyecto para que mvn encuentre el pom
-COPY target/app.jar app.jar
-
-# Crea la carpeta data antes de ejecutar
-RUN mkdir -p data
-
-COPY notas ./ 
+COPY . .
 RUN mvn -B -DskipTests=true clean package
 
-CMD ["java", "-jar", "app.jar"]
-
+# Etapa runtime
 FROM eclipse-temurin:21-jre
 WORKDIR /app/notas
 RUN mkdir -p /app/notas/data
 COPY --from=build /app/notas/target/*.jar app.jar
 EXPOSE 8080
-CMD ["sh","-c","mkdir -p /app/notas/data && java -Dserver.port=${PORT:-8080} -jar /app/notas/app.jar"]
+CMD ["sh", "-c", "mkdir -p /app/notas/data && java -Dserver.port=${PORT:-8080} -jar /app/notas/app.jar"]
